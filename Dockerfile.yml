@@ -1,0 +1,16 @@
+# Specify a base image
+FROM node:18-buster-slim
+
+# Set working directory
+ENV APP_HOME=/usr/app
+WORKDIR $APP_HOME
+
+# Install the depenendencies
+COPY ./package.json $APP_HOME
+RUN npm install --quiet
+COPY ./ $APP_HOME
+
+# Allow the ports
+EXPOSE 6000
+
+ENTRYPOINT [ "npm", "start" ]

@@ -1,0 +1,29 @@
+name: Pull Request
+
+on: 
+  pull_request:
+    branches:
+      - main
+      - staging
+      - production
+    types:
+      - opened
+      - synchronize
+
+env:
+  DOCKER_COMPOSE_NAME: telegram-project
+  DOCKER_APP_NAME: bot-telegram
+
+jobs:
+  build:
+    if: ${{ github.base_ref == 'main' }} || ${{ github.base_ref == 'staging' }} || ${{ github.base_ref == 'production' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: The current user
+        run: | 
+          echo "The current user is: $(whoami)"
+      - name: Build the docker compose
+        run: docker-compose -p $DOCKER_COMPOSE_NAME up -d
+      
