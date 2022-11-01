@@ -10,6 +10,10 @@ on:
       - opened
       - synchronize
 
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   DOCKER_COMPOSE_NAME: telegram-project
   DOCKER_APP_NAME: bot-telegram

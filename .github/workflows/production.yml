@@ -7,6 +7,10 @@ on:
     types:
       - closed
 
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   STATE: production
   DOCKER_REGISTRY_NAME: bot-telegram
