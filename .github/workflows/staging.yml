@@ -34,7 +34,7 @@ jobs:
         run: doctl registry login --expiry-seconds 240
       - name: Check the existing old image with specific tag on 'DigitalOcean'
         id: check_old_image
-        run: echo "::set-output name=sha::${{ env.SHA_COMMAND }}"
+        run: echo "sha=${{ env.SHA_COMMAND }}" >> $GITHUB_OUTPUT
       - name: Remove old images
         run: >
           if [ ! -z "$(doctl registry repository list-manifests $(echo ${{ env.DOCKER_REGISTRY_NAME }}) | grep "$(echo ${{ env.STATE }})")" ] && [ ! -z "${{ steps.check_old_image.outputs.sha }}" ];
